@@ -22,40 +22,39 @@
       //*** ADD ***//
       "esri/Graphic",
       "esri/layers/SceneLayer",
-      "esri/core/Accessor",
+      // "esri/core/Accessor",
       "esri/geometry/Point", 
       "esri/symbols/SimpleMarkerSymbol",
       "esri/symbols/PointSymbol3D",
       "esri/renderers/SimpleRenderer",
-      "esri/renderers/visualVariables/VisualVariables",
+      // "esri/renderers/visualVariables/VisualVariables",
       "esri/symbols/ObjectSymbol3DLayer",
       "esri/layers/FeatureLayer",
       "dojo/domReady!"
       //*** ADD ***//
-    ], function(Map, SceneView, SimpleRenderer, VisualVariables, ObjectSymbol3DLayer, SceneLayer, PointSymbol3D, FeatureLayer
+    ], function(Map, SceneView, SimpleRenderer, ObjectSymbol3DLayer, SceneLayer, PointSymbol3D, FeatureLayer
     ) {
 
       //***ADD***//
       var trunkRenderer = new SimpleRenderer({
         symbol: new PointSymbol3D({
-          symbolLayers: [new ObjectSymbol3DLayer({
-          material: { color: "brown" },  //color the trunk brown
-          resource: { primitive: "cylinder" }  //give each the shape of a cylinder
-        })]
-       }),
+            symbolLayers: [new ObjectSymbol3DLayer({
+            material: { color: "brown" },  //color the trunk brown
+            resource: { primitive: "cylinder" }  //give each the shape of a cylinder
+          })]
+        }),
   
         visualVariables: [{
-            type: "size",
-            axis: "height",  // Set the size on the height axis
-            field: "TreeHeight",  // Tree height in feet
-            valueUnit: "feet"  // converts and visualizes all sizes in feet
-          }, {
-            type: "size",
-            axis: "width-and-depth",  // set the size on both width and depth axes
-            field: "DBH_Analyz",  // Trunk diameter in inches
-            valueUnit: "inches"  // converts and visualizes all sizes in inches\
-          }
-        ]
+          type: "size",
+          axis: "height",  // Set the size on the height axis
+          field: "TreeHeight",  // Tree height in feet
+          valueUnit: "feet"  // converts and visualizes all sizes in feet
+        }, {
+          type: "size",
+          axis: "width-and-depth",  // set the size on both width and depth axes
+          field: "DBH_Analyz",  // Trunk diameter in inches
+          valueUnit: "inches"  // converts and visualizes all sizes in inches\
+        }]
       });
     
       //2019_CherryBlossomService
