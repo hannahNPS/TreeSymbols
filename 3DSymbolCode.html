@@ -3,6 +3,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>2019 Cherry Blossom Planning Map</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.10/"></script>
+
   <style>
     html, body, #viewDiv {
       padding: 0;
@@ -11,8 +14,6 @@
       width: 100%;
     }
   </style>
-   <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
-  <script src="https://js.arcgis.com/4.10/"></script>
   
   <script>  
     require([
@@ -31,7 +32,9 @@
       "esri/layers/FeatureLayer",
       "dojo/domReady!"
       //*** ADD ***//
-], function(Map, SceneView, SimpleRenderer, VisualVariables, ObjectSymbol3DLayer, SceneLayer, PointSymbol3D, FeatureLayer) {
+    ], function(Map, SceneView, SimpleRenderer, VisualVariables, ObjectSymbol3DLayer, SceneLayer, PointSymbol3D, FeatureLayer
+    ) {
+
       //***ADD***//
       var trunkRenderer = new SimpleRenderer({
         symbol: new PointSymbol3D({
@@ -58,9 +61,9 @@
       //2019_CherryBlossomService
       var featureLayer = new FeatureLayer({
         url: "https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/2019CherryBlossom/FeatureServer/0",
-        renderer = trunkRenderer
+        renderer: trunkRenderer
       });
-       var map = new Map({
+      var map = new Map({
         basemap: "satellite"
       });
       map.add(featureLayer);
@@ -78,36 +81,36 @@
           zoom: 16,
           tilt: 70
         })
-    });
+      });
       
 
 
-var crownRenderer = new SimpleRenderer({
-   symbol: new PointSymbol3D({
-     symbolLayers: [new ObjectSymbol3DLayer({
-       material: { color: "green" },
-       resource: { primitive: "sphere" }
-     })]
-   }),
-   visualVariables: [
-     {
-      type: "size",
-      axis: "height", // set the crown height on the height axis
-      field: "TreeHeight", // Crown heights are expressed in feet
-      valueUnit: "feet" // converts and extrudes all data values in feet
-    }, {
-      type: "size",
-      axis: "width", // set the crown diameter (east to west) to the width axis
-      field: "CrownWid_1", // crown diameter (EW) is expressed in feet
-      valueUnit: "feet" // converts and extrudes all data values in feet
-    }, {
-      type: "size",
-      axis: "depth", // set the crown diameter (north to south) to the depth axis
-      field: "CrownWid_2", // crown diameter (NS) is expressed in feet
-      valueUnit: "feet" // converts and extrudes all data values in feet
-    }
-   ]
-});
+      var crownRenderer = new SimpleRenderer({
+         symbol: new PointSymbol3D({
+           symbolLayers: [new ObjectSymbol3DLayer({
+             material: { color: "green" },
+             resource: { primitive: "sphere" }
+           })]
+         }),
+         visualVariables: [
+           {
+            type: "size",
+            axis: "height", // set the crown height on the height axis
+            field: "TreeHeight", // Crown heights are expressed in feet
+            valueUnit: "feet" // converts and extrudes all data values in feet
+          }, {
+            type: "size",
+            axis: "width", // set the crown diameter (east to west) to the width axis
+            field: "CrownWid_1", // crown diameter (EW) is expressed in feet
+            valueUnit: "feet" // converts and extrudes all data values in feet
+          }, {
+            type: "size",
+            axis: "depth", // set the crown diameter (north to south) to the depth axis
+            field: "CrownWid_2", // crown diameter (NS) is expressed in feet
+            valueUnit: "feet" // converts and extrudes all data values in feet
+          }
+         ]
+      });
 
     });
   </script>
