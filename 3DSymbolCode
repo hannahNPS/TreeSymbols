@@ -1,0 +1,118 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>2019 Cherry Blossom Planning Map</title>
+  <style>
+    html, body, #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+   <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.10/"></script>
+  
+  <script>  
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      //*** ADD ***//
+      "esri/Graphic",
+      "esri/layers/SceneLayer",
+      "esri/core/Accessor",
+      "esri/geometry/Point", 
+      "esri/symbols/SimpleMarkerSymbol",
+      "esri/symbols/PointSymbol3D",
+      "esri/renderers/SimpleRenderer",
+      "esri/renderers/visualVariables/VisualVariables",
+      "esri/symbols/ObjectSymbol3DLayer",
+      "esri/layers/FeatureLayer",
+      "dojo/domReady!"
+      //*** ADD ***//
+], function(Map, SceneView, SimpleRenderer, VisualVariables, ObjectSymbol3DLayer, SceneLayer, PointSymbol3D, FeatureLayer) {
+      //***ADD***//
+      var trunkRenderer = new SimpleRenderer({
+        symbol: new PointSymbol3D({
+          symbolLayers: [new ObjectSymbol3DLayer({
+          material: { color: "brown" },  //color the trunk brown
+          resource: { primitive: "cylinder" }  //give each the shape of a cylinder
+        })]
+       }),
+  
+        visualVariables: [{
+            type: "size",
+            axis: "height",  // Set the size on the height axis
+            field: "TreeHeight",  // Tree height in feet
+            valueUnit: "feet"  // converts and visualizes all sizes in feet
+          }, {
+            type: "size",
+            axis: "width-and-depth",  // set the size on both width and depth axes
+            field: "DBH_Analyz",  // Trunk diameter in inches
+            valueUnit: "inches"  // converts and visualizes all sizes in inches\
+          }
+        ]
+      });
+    
+      //2019_CherryBlossomService
+      var featureLayer = new FeatureLayer({
+        url: "https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/2019CherryBlossom/FeatureServer/0",
+        renderer = trunkRenderer
+      });
+       var map = new Map({
+        basemap: "satellite"
+      });
+      map.add(featureLayer);
+      
+      
+      var view = new SceneView({
+        container: "viewDiv",
+        map: map
+        //center: [-77.036064, 38.885705],
+        //zoom: 15
+      });
+      view.when(function(){
+        view.goTo({
+          center: [-77.036064,38.885705],
+          zoom: 16,
+          tilt: 70
+        })
+    });
+      
+
+
+var crownRenderer = new SimpleRenderer({
+   symbol: new PointSymbol3D({
+     symbolLayers: [new ObjectSymbol3DLayer({
+       material: { color: "green" },
+       resource: { primitive: "sphere" }
+     })]
+   }),
+   visualVariables: [
+     {
+      type: "size",
+      axis: "height", // set the crown height on the height axis
+      field: "TreeHeight", // Crown heights are expressed in feet
+      valueUnit: "feet" // converts and extrudes all data values in feet
+    }, {
+      type: "size",
+      axis: "width", // set the crown diameter (east to west) to the width axis
+      field: "CrownWid_1", // crown diameter (EW) is expressed in feet
+      valueUnit: "feet" // converts and extrudes all data values in feet
+    }, {
+      type: "size",
+      axis: "depth", // set the crown diameter (north to south) to the depth axis
+      field: "CrownWid_2", // crown diameter (NS) is expressed in feet
+      valueUnit: "feet" // converts and extrudes all data values in feet
+    }
+   ]
+});
+
+    });
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>
